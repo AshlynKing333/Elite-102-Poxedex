@@ -1,0 +1,25 @@
+.logo{  
+    font-size: 25px;
+    font-family: verdana;
+    text-align: center;
+    margin-top: 0px;
+    line-height: 50px;
+    padding-left: 9px;
+    margin-bottom: 0px;
+    padding-top: 10px;
+    padding-bottom:20px;
+    background-color: rgb(253, 14, 14);
+}
+
+.searchbar{
+    font-family: verdana;
+    text-align: right;
+    background-color: rgb(253, 14, 14);
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-right: 9px;
+    font-size: 15px;
+}
+
+
+

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 
+// import {PokemonListComponent} from '../services/pokemon-list.component';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +13,10 @@ export class AppComponent {
   searchword = ""
   constructor(private http: HttpClient) { }
 
-  getPokemons() {
-    return this.http.get("https://pokeapi.co/api/v2/pokemon?limit=10")
-  }
-  
-  @Output() searchcriteria = new EventEmitter<String>();
   searchThis() {
-    this.searchcriteria.emit(this.searchword)
-}
+    this.Pokemonsearch.next(this.searchword)
+  }
+
+   Pokemonsearch: Subject<string> = new Subject<string>();
+
 }

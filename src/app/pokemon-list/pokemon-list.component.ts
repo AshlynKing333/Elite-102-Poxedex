@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {DataService} from '../services/data.service';
+import { Observable, Subscription} from 'rxjs';
 
 
 @Component({
@@ -10,44 +11,33 @@ import {DataService} from '../services/data.service';
 export class PokemonListComponent implements OnInit {
   pokemons: any[] = [];
   displaypokemons: any[] = [];
+  private searchSubscription: Subscription;
+  @Input() search: Observable<string>;
 
   constructor(
     private dataService: DataService
   ) { }
 
-  ngOnInit(): void {
-    this.dataService.getPokemons()
-      .subscribe((response: any) => {
-        response.results.forEach(result => {
-          this.dataService.getMoreData(result.name)
-            .subscribe((uniqResponse: any) => {
-              this.pokemons.push(uniqResponse);
-              
-            });
-        });
-        this.pokemons.sort((a, b) => a.id - b.id)
-
-       this.displaypokemons = this.pokemons
-      });
-        
-  }        
-
-  
-  onSearchChange(e) {
-    let value =e.detail.value;
-
-    if (value == '') {
-      this.displaypokemons;
-      return;
-    }
-    
-    this.dataService.findPokemon(value).subscribe(res => {
-      this.pokemons =[res];
-    }, err => {
-      this.pokemons = [];
-    })
-  }
-
+ngOnInit(): void {
+     this.dataService.getPokemons()
+       .subscribe((response: any) => {
+         response.results.forEach(result => {
+           this.dataService.getMoreData(result.name)
+             .subscribe((uniqResponse: any) => {
+               this.pokemons.push(uniqResponse);
+               this.pokemons.sort((a, b) => a.id - b.id)
+               this.displaypokemons = this.pokemons
+             });
+         });
+       });
+       this.searchSubscription = this.search.subscribe((word) => this.searchThis(word)); 
+   }        
+searchThis(word) {
+  this.displaypokemons = this.pokemons.filter((ele, i, array) =>{
+    return ele.name.includes(word)
+  })
 }
+  }
+  
   
 

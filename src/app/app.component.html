@@ -8,6 +8,9 @@
 <body style= "margin: 0; background-color: rgb(240, 240, 240);">
   <div>
     <h1 class=logo>Elite 102 Pokedex</h1>
-    <h1 class = searchbar><input matInput type="text"  [(ngModel)]="searchword"(input)="searchThis()"></h1>
+  <h1 class=searchbar><input  placeholder="Search Pokemon" (input) ="searchThis()" [(ngModel)]= "searchword"></h1>
   </div>
-  <app-pokemon-list></app-pokemon-list>
+  <app-pokemon-list [search]="Pokemonsearch"></app-pokemon-list>
+  
+</body>
+</html>
